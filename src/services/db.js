@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-let dbName = "saber-digital-db-test";
+let dbName = "saber-digital-db";
 
 mongoose.connect(`mongodb+srv://saberdigital:saberdigital@saber-digital-db.bbpgwpb.mongodb.net/${dbName}`, { useNewUrlParser: true, useUnifiedTopology: true },
 
