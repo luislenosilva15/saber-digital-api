@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const multer = require('multer');
-const { Storage, DeleteImage } = require('../controllers/AssetsController');
+const { Storage } = require('../controllers/AssetsController');
 
 const Responsible = require('../models/ResponsibleModel');
 
@@ -30,20 +30,20 @@ router.post('/register', upload.any('image'), async(req, res) => {
                     await Responsible.create(responsible)
                     return res.status(201).send({ message: "created" });
                 } catch {
-                    DeleteImage('responsible', image)
+                    // DeleteImage('responsible', image)
                     return res.status(500).send({ message: "Internal Server Error" });
                 }
             } else {
-                DeleteImage('responsible', image)
+                // DeleteImage('responsible', image)
                 return res.status(401).send({ message: "email already registered" });
             }
         } catch {
-            DeleteImage('responsible', image)
+            // DeleteImage('responsible', image)
             return res.status(500).send({ message: "internal Server Error" });
         }
 
     } catch {
-        DeleteImage('responsible', image)
+        // DeleteImage('responsible', image)
         return res.status(400).send({ message: "error register responsible" });
     }
 })
