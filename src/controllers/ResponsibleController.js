@@ -13,7 +13,7 @@ router.post('/register', parser.single('image'), async(req, res) => {
     try {
         let responsible;
         const responsibleDetails = req.body;
-        const image = req.files[0].filename;
+        const image = req.file.path;
 
         if (responsibleDetails && image != undefined) {
             responsible = Object.assign(responsibleDetails, { image })
