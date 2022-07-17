@@ -11,10 +11,9 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
-        folder: async(req) => req.body.schoolId,
+        folder: async(req) => req.baseUrl,
         format: async(req, file) => 'png',
-        public_id: (req, file) => Date.now() + req.body.firstName,
-
+        public_id: (req, file) => Date.now() + '_' + file.originalname,
     },
 });
 
