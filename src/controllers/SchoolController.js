@@ -1,16 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+
 const multer = require('multer');
-const { Storage, DeleteImage } = require('../controllers/AssetsController');
+const storage = require('../middleware/storage')
+const parser = multer({ storage: storage });
 
 const School = require('../models/SchoolModel');
 
-const storage = Storage('schools');
-const upload = multer({ storage });
-
 // Create new school
-router.post('/register', upload.any('image'), async(req, res) => {
+router.post('/register', parser.single('image'), async(req, res) => {
 
     try {
         let school;
@@ -29,20 +28,20 @@ router.post('/register', upload.any('image'), async(req, res) => {
                     School.create(school)
                     return res.status(201).send({ message: "created" });
                 } catch {
-                    DeleteImage('schools', image)
+
                     return res.status(500).send({ message: "Internal Server Error" });
                 }
             } else {
-                DeleteImage('schools', image)
+
                 return res.status(401).send({ message: "email already registered" });
             }
         } catch {
-            DeleteImage('schools', image)
+
             return res.status(500).send({ message: "Internal Server Error" });
         }
 
     } catch {
-        DeleteImage('schools', image)
+
         return res.status(400).send({ message: "error register school" });
     }
 })

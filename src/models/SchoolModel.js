@@ -3,10 +3,6 @@ const bcrypt = require('bcryptjs')
 
 const schoolSchema = new db.Schema({
 
-    schoolId: {
-        type: Number,
-    },
-
     email: {
         type: String,
     },

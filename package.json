@@ -1,26 +1,28 @@
 {
-  "name": "saber-digital-api",
-  "version": "1.0.0",
-  "description": "api saber digital",
-  "main": "index.js",
-  "scripts": {
-    "test": "nodemon index.js",
-    "start": "node index.js"
-  },
-  "author": "Saber Digital",
-  "license": "ISC",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "moment": "^2.29.1",
-    "mongoose": "^6.0.7",
-    "multer": "^1.4.3",
-    "nodemailer": "^6.7.2",
-    "socket.io": "^4.4.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.12"
-  }
+    "name": "saber-digital-api",
+    "version": "1.0.0",
+    "description": "api saber digital",
+    "main": "index.js",
+    "scripts": {
+        "test": "nodemon index.js",
+        "start": "node index.js"
+    },
+    "author": "Saber Digital",
+    "license": "ISC",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "cloudinary": "^1.30.0",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "jsonwebtoken": "^8.5.1",
+        "moment": "^2.29.1",
+        "mongoose": "^6.0.7",
+        "multer": "^1.4.3",
+        "multer-storage-cloudinary": "^4.0.0",
+        "nodemailer": "^6.7.2",
+        "socket.io": "^4.4.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.12"
+    }
 }
