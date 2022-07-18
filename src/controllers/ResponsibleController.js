@@ -27,6 +27,7 @@ router.post('/register', parser.single('image'), async(req, res) => {
             if (responsibleDB == null) {
                 try {
                     await Responsible.create(responsible)
+
                     return res.status(201).send({ message: "created" });
                 } catch {
 
@@ -50,10 +51,10 @@ router.post('/register', parser.single('image'), async(req, res) => {
 // Responsible Login
 router.post('/login', async(req, res) => {
 
-    const { email, password, schoolId } = req.body;
+    const { email, password } = req.body;
 
-    if (email && password && schoolId != undefined) {
-        const responsibleDB = await Responsible.findOne({ email: email, schoolId: schoolId })
+    if (email && password != undefined) {
+        const responsibleDB = await Responsible.findOne({ email: email })
 
         if (responsibleDB != null) {
             bcrypt.compare(password, responsibleDB.password, function(err, result) {

@@ -47,7 +47,7 @@ const responsibleSchema = new db.Schema({
     ],
 
     schoolId: {
-        type: Number,
+        type: String,
     },
 
     gender: {

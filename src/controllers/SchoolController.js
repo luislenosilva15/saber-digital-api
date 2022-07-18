@@ -10,7 +10,6 @@ const School = require('../models/SchoolModel');
 
 // Create new school
 router.post('/register', parser.single('image'), async(req, res) => {
-
     try {
         let school;
         const schoolDetails = req.body;
@@ -45,7 +44,6 @@ router.post('/register', parser.single('image'), async(req, res) => {
         return res.status(400).send({ message: "error register school" });
     }
 })
-
 
 
 module.exports = app => app.use('/school', router);

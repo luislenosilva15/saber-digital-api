@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Student = require('../models/StudentModel');
+const StudentClass = require('../models/StudentClassModel');
 
 const multer = require('multer');
 const storage = require('../middleware/storage')
@@ -31,6 +32,64 @@ router.post('/register', parser.single('image'), async(req, res) => {
 
     } catch {
         return res.status(400).send({ message: "error register student" });
+    }
+})
+
+// List students 
+// Pass type for list small or long attributes, if not pass, return all atributes
+router.get('/list', async(req, res) => {
+
+    try {
+        const students = req.body;
+        const { type } = req.query;
+        let student = [];
+
+        if (students != undefined) {
+
+            for (let i = 0; i < students.length; i++) {
+
+                const studentData = await Student.findById(students[i])
+                if (type == undefined) {
+                    const studentClassName = await StudentClass.findById(studentData.studentClassId)
+                    if (studentClassName != null) {
+
+                        const a = Object.assign(studentData, studentClassName)
+
+                        student.push(a)
+                    } else {
+                        return res.status(401).send({ message: "failed to find studentClass" });
+                    }
+                }
+
+                if (type == 'smaill') {
+                    const studentClassName = await StudentClass.findById(studentData.studentClassId)
+
+                    if (studentClassName != null) {
+                        student.push({
+                            "firstName": studentData.firstName,
+                            "lastName": studentData.lastName,
+                            "image": studentData.image,
+                            "studentClassName": studentClassName.name
+                        })
+                    } else {
+                        return res.status(401).send({ message: "failed to find studentClass" });
+                    }
+                }
+            }
+
+            if (student != []) {
+                return res.status(200).send(student);
+            } else {
+                return res.status(401).send({ message: "failed to find a list of students" });
+            }
+
+        } else {
+            return res.status(400).send({ message: "failed to find students" });
+        }
+
+    } catch {
+
+        return res.status(400).send({ message: "failed to find students" });
     }
 })
 
