@@ -37,14 +37,12 @@ router.post('/register', parser.single('image'), async(req, res) => {
 
 // List students 
 // Pass type for list small or long attributes, if not pass, return all atributes
-router.get('/list', async(req, res) => {
+router.post('/list', async(req, res) => {
 
     try {
-        const students = req.params.studentId;
+        const students = req.body.studentId;
         const { type } = req.query;
         let student = [];
-        console.log('studentId', students)
-        console.log('studentId', req)
 
         if (students != undefined) {
 
