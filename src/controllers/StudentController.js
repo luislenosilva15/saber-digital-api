@@ -40,9 +40,11 @@ router.post('/register', parser.single('image'), async(req, res) => {
 router.get('/list', async(req, res) => {
 
     try {
-        const students = req.body.studentList;
+        const students = req.params.studentId;
         const { type } = req.query;
         let student = [];
+        console.log('studentId', students)
+        console.log('studentId', req)
 
         if (students != undefined) {
 
