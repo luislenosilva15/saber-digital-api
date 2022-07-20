@@ -53,9 +53,7 @@ router.get('/list', async(req, res) => {
                     const studentClassName = await StudentClass.findById(studentData.studentClassId)
                     if (studentClassName != null) {
 
-                        const a = Object.assign(studentData, studentClassName)
-
-                        student.push(a)
+                        student.push(studentData)
                     } else {
                         return res.status(401).send({ message: "failed to find studentClass" });
                     }
