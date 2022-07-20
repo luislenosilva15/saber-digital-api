@@ -40,7 +40,7 @@ router.post('/register', parser.single('image'), async(req, res) => {
 router.get('/list', async(req, res) => {
 
     try {
-        const students = req.body;
+        const students = req.body.studentList;
         const { type } = req.query;
         let student = [];
 
