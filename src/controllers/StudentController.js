@@ -64,6 +64,7 @@ router.post('/list', async(req, res) => {
 
                     if (studentClassName != null) {
                         student.push({
+                            "firstName": studentData._id,
                             "firstName": studentData.firstName,
                             "lastName": studentData.lastName,
                             "image": studentData.image,
