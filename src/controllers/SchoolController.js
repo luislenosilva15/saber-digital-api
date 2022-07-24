@@ -24,7 +24,7 @@ router.post('/register', parser.single('image'), async(req, res) => {
             const schoolDB = await School.findOne({ email: schoolDetails.email })
             if (schoolDB == null) {
                 try {
-                    School.create(school)
+                    await School.create(school)
                     return res.status(201).send({ message: "created" });
                 } catch {
 

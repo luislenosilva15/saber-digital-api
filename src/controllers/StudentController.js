@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Student = require('../models/StudentModel');
+const Responsible = require('../models/ResponsibleModel');
 const StudentClass = require('../models/StudentClassModel');
 
 const multer = require('multer');
@@ -35,60 +36,36 @@ router.post('/register', parser.single('image'), async(req, res) => {
     }
 })
 
-// List students 
-// Pass type for list small or long attributes, if not pass, return all atributes
-router.post('/list', async(req, res) => {
+router.get('/list/responsible', async(req, res) => {
 
     try {
-        const students = req.body.studentId;
-        const { type } = req.query;
-        let student = [];
+        const { responsibleId } = req.query;
+        const studentData = [];
 
-        if (students != undefined) {
+        const studentId = await Responsible.findById(responsibleId).distinct('studentId')
 
-            for (let i = 0; i < students.length; i++) {
-
-                const studentData = await Student.findById(students[i])
-                if (type == undefined) {
-                    const studentClassName = await StudentClass.findById(studentData.studentClassId)
-                    if (studentClassName != null) {
-
-                        student.push(studentData)
-                    } else {
-                        return res.status(401).send({ message: "failed to find studentClass" });
-                    }
-                }
-
-                if (type == 'smaill') {
-                    const studentClassName = await StudentClass.findById(studentData.studentClassId)
-
-                    if (studentClassName != null) {
-                        student.push({
-                            "firstName": studentData._id,
-                            "firstName": studentData.firstName,
-                            "lastName": studentData.lastName,
-                            "image": studentData.image,
-                            "studentClassName": studentClassName.name
-                        })
-                    } else {
-                        return res.status(401).send({ message: "failed to find studentClass" });
-                    }
-                }
+        if (req.query.type == "small") {
+            for (let i = 0; i < studentId.length; i++) {
+                const student = await Student.findById(studentId[i])
+                const studentClass = await StudentClass.findById(student.studentClassId)
+                studentData.push({
+                    _id: student._id,
+                    firstName: student.firstName,
+                    lastName: student.lastName,
+                    image: student.image,
+                    studentClassName: studentClass.name
+                })
             }
-
-            if (student != []) {
-                return res.status(200).send(student);
-            } else {
-                return res.status(401).send({ message: "failed to find a list of students" });
-            }
-
         } else {
-            return res.status(400).send({ message: "failed to find students" });
+            for (let i = 0; i < studentId.length; i++) {
+                const student = await Student.findById(studentId[i])
+                studentData.push(student)
+            }
         }
+        return res.status(200).send(studentData);
 
     } catch {
-
-        return res.status(400).send({ message: "failed to find students" });
+        return res.status(400).send({ message: "error list students" });
     }
 })
 
