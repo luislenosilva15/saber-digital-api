@@ -13,6 +13,7 @@ require('./src/controllers/ResponsibleController')(app);
 require('./src/controllers/StudentController')(app);
 require('./src/controllers/StudentClassController')(app);
 require('./src/controllers/DiaryController')(app);
+require('./src/controllers/NewsController')(app);
 
 app.listen(port, () => {
     console.log(`Servidor rodando no endereço http://localhost:${port}`)

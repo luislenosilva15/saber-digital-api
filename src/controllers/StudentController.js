@@ -69,4 +69,33 @@ router.get('/list/responsible', async(req, res) => {
     }
 })
 
+router.get('/list/single', async(req, res) => {
+
+    try {
+        const { studentId } = req.query;
+        let studentData;
+
+        if (req.query.type == "small") {
+
+            const student = await Student.findById(studentId)
+            const studentClass = await StudentClass.findById(student.studentClassId)
+            studentData = {
+                _id: student._id,
+                firstName: student.firstName,
+                lastName: student.lastName,
+                image: student.image,
+                studentClassName: studentClass.name
+            }
+
+        } else {
+            const student = await Student.findById(studentId)
+            studentData = student
+
+        }
+        return res.status(200).send(studentData);
+
+    } catch {
+        return res.status(400).send({ message: "error list student" });
+    }
+})
 module.exports = app => app.use('/student', router);
