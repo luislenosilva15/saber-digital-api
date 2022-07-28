@@ -10,21 +10,19 @@ const parser = multer({ storage: storage });
 
 // Register new Diary
 router.post('/register', parser.single('image'), async(req, res) => {
+
     try {
-        let image = req.file.path;
         let diaryDetails = req.body;
         let diary;
 
         if (req.file != undefined) {
+            let image = req.file.path;
             diary = Object.assign(diaryDetails, { image })
         } else {
             diary = diaryDetails;
         }
 
-        console.log(diary)
         const diaryDb = await Diary.create(diary)
-
-        console.log(diaryDb)
 
         return res.status(201).send({ message: "sucess" });
 
